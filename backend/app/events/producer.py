@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 from typing import Any
 
 from kafka import KafkaProducer
@@ -44,7 +45,7 @@ def get_producer() -> KafkaProducer | None:
     return _producer
 
 
-def publish_event(event: Any, key: str | None = None) -> None:
+def publish_event(event: Any, key: str | None = None, max_retries: int = 3) -> None:
     try:
         producer = get_producer()
         if not producer:
@@ -52,12 +53,36 @@ def publish_event(event: Any, key: str | None = None) -> None:
 
         payload = event.model_dump() if hasattr(event, "model_dump") else event
         event_type = payload.get("event_type", "unknown")
-        future = producer.send(config.EVENT_HUB_TOPIC, value=payload, key=key)
-        future.add_callback(
-            lambda meta: logger.info("Published %s event to %s", event_type, meta.topic)
-        )
-        future.add_errback(
-            lambda exc: logger.error("Failed to publish %s event: %s", event_type, exc)
+        event_id = payload.get("event_id", "unknown")
+
+        for attempt in range(1, max_retries + 1):
+            try:
+                future = producer.send(config.EVENT_HUB_TOPIC, value=payload, key=key)
+                metadata = future.get(timeout=10)
+                logger.info(
+                    "event_publish_success event_id=%s event_type=%s topic=%s partition=%s offset=%s",
+                    event_id,
+                    event_type,
+                    metadata.topic,
+                    metadata.partition,
+                    metadata.offset,
+                )
+                return
+            except Exception as exc:
+                logger.warning(
+                    "event_publish_retry event_id=%s event_type=%s attempt=%s error=%s",
+                    event_id,
+                    event_type,
+                    attempt,
+                    exc,
+                )
+                time.sleep(0.2 * attempt)
+
+        logger.error(
+            "event_publish_failed event_id=%s event_type=%s retries=%s",
+            event_id,
+            event_type,
+            max_retries,
         )
     except Exception:
-        logger.exception("Event publish failed")
+        logger.exception("event_publish_exception")

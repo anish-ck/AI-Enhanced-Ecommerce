@@ -36,7 +36,15 @@ def main() -> None:
     logger.info("Consumer started")
 
     for message in consumer:
-        print("Received event:", message.value)
+        payload = message.value
+        event_id = payload.get("event_id")
+        event_type = payload.get("event_type")
+        timestamp = payload.get("timestamp")
+        print("Received event")
+        print(f"event_id: {event_id}")
+        print(f"event_type: {event_type}")
+        print(f"timestamp: {timestamp}")
+        print(json.dumps(payload, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":
