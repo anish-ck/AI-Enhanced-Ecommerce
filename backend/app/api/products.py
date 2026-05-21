@@ -1,9 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
+from app.api.auth import get_current_user_optional
 from app.db.database import get_db
+from app.events.producer import publish_event
+from app.events.schemas import ProductViewEvent
 from app.models.category import Category
 from app.models.product import Product
+from app.models.user import User
 from app.schemas.product import ProductCreate, ProductOut, ProductUpdate
 
 router = APIRouter(prefix="/products", tags=["products"])
@@ -15,10 +19,19 @@ def list_products(db: Session = Depends(get_db)) -> list[Product]:
 
 
 @router.get("/{product_id}", response_model=ProductOut)
-def get_product(product_id: int, db: Session = Depends(get_db)) -> Product:
+def get_product(
+    product_id: int,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+    current_user: User | None = Depends(get_current_user_optional),
+) -> Product:
     product = db.query(Product).filter(Product.id == product_id).first()
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
+
+    if current_user:
+        event = ProductViewEvent(user_id=current_user.id, product_id=product.id)
+        background_tasks.add_task(publish_event, event)
     return product
 
 

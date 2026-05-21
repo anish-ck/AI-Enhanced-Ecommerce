@@ -20,3 +20,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(get_env("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 
 origins_raw = get_env("CORS_ORIGINS", "http://localhost:5173")
 CORS_ORIGINS = [item.strip() for item in origins_raw.split(",") if item.strip()]
+
+EVENT_HUB_BOOTSTRAP_SERVER = get_env("EVENT_HUB_BOOTSTRAP_SERVER")
+EVENT_HUB_CONNECTION_STRING = get_env("EVENT_HUB_CONNECTION_STRING")
+EVENT_HUB_TOPIC = get_env("EVENT_HUB_TOPIC")

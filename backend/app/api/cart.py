@@ -1,8 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.api.auth import get_current_user
 from app.db.database import get_db
+from app.events.producer import publish_event
+from app.events.schemas import AddToCartEvent
 from app.models.cart import CartItem
 from app.models.product import Product
 from app.models.user import User
@@ -27,6 +29,7 @@ def get_cart(
 @router.post("/add", response_model=CartItemOut)
 def add_to_cart(
     payload: CartItemCreate,
+    background_tasks: BackgroundTasks,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> CartItem:
@@ -54,6 +57,13 @@ def add_to_cart(
 
     db.commit()
     db.refresh(cart_item)
+
+    event = AddToCartEvent(
+        user_id=current_user.id,
+        product_id=payload.product_id,
+        quantity=payload.quantity,
+    )
+    background_tasks.add_task(publish_event, event)
     return cart_item
 
 

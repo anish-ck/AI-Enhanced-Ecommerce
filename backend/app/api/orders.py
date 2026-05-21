@@ -1,10 +1,12 @@
 from decimal import Decimal
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.api.auth import get_current_user
 from app.db.database import get_db
+from app.events.producer import publish_event
+from app.events.schemas import CheckoutCompletedEvent
 from app.models.cart import CartItem
 from app.models.order import Order, OrderItem
 from app.models.user import User
@@ -15,6 +17,7 @@ router = APIRouter(prefix="/orders", tags=["orders"])
 
 @router.post("/create", response_model=OrderOut, status_code=status.HTTP_201_CREATED)
 def create_order(
+    background_tasks: BackgroundTasks,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> Order:
@@ -48,6 +51,13 @@ def create_order(
 
     db.commit()
     db.refresh(order)
+
+    event = CheckoutCompletedEvent(
+        user_id=current_user.id,
+        order_id=order.id,
+        total_amount=float(order.total_amount),
+    )
+    background_tasks.add_task(publish_event, event)
     return order
 
 

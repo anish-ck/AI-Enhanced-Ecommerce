@@ -17,6 +17,7 @@ from app.schemas.user import UserOut
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_scheme_optional = OAuth2PasswordBearer(tokenUrl="/auth/login", auto_error=False)
 
 
 def get_current_user(
@@ -38,6 +39,22 @@ def get_current_user(
             detail="Invalid authentication credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+
+def get_current_user_optional(
+    db: Session = Depends(get_db),
+    token: str | None = Depends(oauth2_scheme_optional),
+) -> User | None:
+    if not token:
+        return None
+    try:
+        payload = decode_access_token(token)
+        subject = payload.get("sub")
+        if subject is None:
+            return None
+        return db.query(User).filter(User.id == int(subject)).first()
+    except (JWTError, ValueError):
+        return None
 
 
 @router.post("/signup", response_model=UserOut, status_code=status.HTTP_201_CREATED)
