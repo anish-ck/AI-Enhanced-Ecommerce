@@ -301,6 +301,65 @@ p {
   gap: 16px;
 }
 
+.admin-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.inline-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.inline-form input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.ai-panel {
+  background: linear-gradient(140deg, rgba(15, 138, 123, 0.08), rgba(255, 255, 255, 0.95));
+}
+
+.image-preview {
+  border-radius: var(--radius-sm);
+  border: 1px dashed rgba(15, 138, 123, 0.35);
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.ai-preview {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--stroke);
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  display: grid;
+  gap: 10px;
+}
+
+.ai-preview h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(15, 138, 123, 0.14);
+  color: var(--accent-strong);
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
 .form label {
   display: grid;
   gap: 8px;
@@ -466,6 +525,10 @@ p {
   }
 
   .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-grid {
     grid-template-columns: 1fr;
   }
 

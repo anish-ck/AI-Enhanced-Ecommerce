@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
 import Orders from './pages/Orders'
+import AdminNewProduct from './pages/AdminNewProduct'
 import ProductDetail from './pages/ProductDetail'
 import Signup from './pages/Signup'
 import { AuthProvider } from './state/AuthContext'
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/products" element={<Home />} />
                 <Route path="/products/:id" element={<ProductDetail />} />
+                <Route path="/admin/products/new" element={<AdminNewProduct />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/orders" element={<Orders />} />

@@ -54,6 +54,28 @@ export const api = {
     me: (token) => request('/auth/me', { token }),
     listProducts: () => request('/products'),
     getProduct: (productId) => request(`/products/${productId}`),
+    createProduct: (payload) =>
+        request('/products', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+        }),
+    listCategories: () => request('/categories'),
+    createCategory: (payload) =>
+        request('/categories', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+        }),
+    generateProductAI: (imageFile, productId = null) => {
+        const formData = new FormData()
+        formData.append('image', imageFile)
+        if (productId !== null && productId !== undefined) {
+            formData.append('product_id', String(productId))
+        }
+        return request('/products/ai-generate', {
+            method: 'POST',
+            body: formData,
+        })
+    },
     listReviews: (productId) => request(`/products/${productId}/reviews`),
     createReview: (payload, token) =>
         request('/reviews', {

@@ -24,3 +24,5 @@ CORS_ORIGINS = [item.strip() for item in origins_raw.split(",") if item.strip()]
 EVENT_HUB_BOOTSTRAP_SERVER = get_env("EVENT_HUB_BOOTSTRAP_SERVER")
 EVENT_HUB_CONNECTION_STRING = get_env("EVENT_HUB_CONNECTION_STRING")
 EVENT_HUB_TOPIC = get_env("EVENT_HUB_TOPIC")
+OLLAMA_URL = get_env("OLLAMA_URL", "http://ollama:11434")
+OLLAMA_MODEL = get_env("OLLAMA_MODEL", "qwen3-vl:8b")

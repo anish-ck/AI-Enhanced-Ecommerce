@@ -26,6 +26,9 @@ function TopBar() {
                 <NavLink className={navClass} to="/orders">
                     Orders
                 </NavLink>
+                <NavLink className={navClass} to="/admin/products/new">
+                    New product
+                </NavLink>
             </nav>
             <div className="auth">
                 {user ? (

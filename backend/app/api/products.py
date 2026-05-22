@@ -1,4 +1,4 @@
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, UploadFile, status
 from sqlalchemy.orm import Session
 
 from app.api.auth import get_current_user_optional
@@ -8,7 +8,9 @@ from app.events.schemas import ProductViewEvent
 from app.models.category import Category
 from app.models.product import Product
 from app.models.user import User
+from app.schemas.ai import AIGenerateResult
 from app.schemas.product import ProductCreate, ProductOut, ProductUpdate
+from app.services.ollama import OllamaError, generate_product_content
 
 router = APIRouter(prefix="/products", tags=["products"])
 
@@ -50,11 +52,52 @@ def create_product(
         category_id=payload.category_id,
         price=payload.price,
         stock=payload.stock,
+        ai_title=payload.ai_title,
+        ai_description=payload.ai_description,
+        ai_category=payload.ai_category,
+        ai_tags=payload.ai_tags,
+        ai_generated=payload.ai_generated if payload.ai_generated is not None else False,
     )
     db.add(product)
     db.commit()
     db.refresh(product)
     return product
+
+
+@router.post("/ai-generate", response_model=AIGenerateResult)
+async def generate_ai_content(
+    image: UploadFile = File(...),
+    product_id: int | None = Form(default=None),
+    db: Session = Depends(get_db),
+) -> AIGenerateResult:
+    image_bytes = await image.read()
+    if not image_bytes:
+        raise HTTPException(status_code=400, detail="Image is required")
+
+    try:
+        generated = generate_product_content(image_bytes)
+    except OllamaError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+    if product_id is not None:
+        product = db.query(Product).filter(Product.id == product_id).first()
+        if not product:
+            raise HTTPException(status_code=404, detail="Product not found")
+
+        product.ai_title = generated.ai_title
+        product.ai_description = generated.ai_description
+        product.ai_category = generated.ai_category
+        product.ai_tags = generated.ai_tags
+        product.ai_generated = True
+        db.commit()
+
+    return AIGenerateResult(
+        ai_title=generated.ai_title,
+        ai_description=generated.ai_description,
+        ai_category=generated.ai_category,
+        ai_tags=generated.ai_tags,
+        product_id=product_id,
+    )
 
 
 @router.put("/{product_id}", response_model=ProductOut)

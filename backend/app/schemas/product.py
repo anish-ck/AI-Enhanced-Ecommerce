@@ -14,7 +14,11 @@ class ProductBase(BaseModel):
 
 
 class ProductCreate(ProductBase):
-    pass
+    ai_title: Optional[str] = None
+    ai_description: Optional[str] = None
+    ai_category: Optional[str] = None
+    ai_tags: Optional[list[str]] = None
+    ai_generated: Optional[bool] = None
 
 
 class ProductUpdate(BaseModel):
@@ -23,10 +27,20 @@ class ProductUpdate(BaseModel):
     category_id: Optional[int] = None
     price: Optional[Decimal] = None
     stock: Optional[int] = None
+    ai_title: Optional[str] = None
+    ai_description: Optional[str] = None
+    ai_category: Optional[str] = None
+    ai_tags: Optional[list[str]] = None
+    ai_generated: Optional[bool] = None
 
 
 class ProductOut(ProductBase):
     id: int
     created_at: datetime
+    ai_title: Optional[str] = None
+    ai_description: Optional[str] = None
+    ai_category: Optional[str] = None
+    ai_tags: Optional[list[str]] = None
+    ai_generated: bool
 
     model_config = ConfigDict(from_attributes=True)
