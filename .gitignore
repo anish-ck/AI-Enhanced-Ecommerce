@@ -11,3 +11,7 @@ data/
 
 *.ai_features.md
 *.phase_1_ai_commerce_platform_setup_guide.md
+*.ai-analytics-frontend.md
+*.simplified_groq_analytics_container_prompt_md.md
+*.sql-generation.md
+*.sql-mcp2.md
