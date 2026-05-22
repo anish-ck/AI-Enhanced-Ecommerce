@@ -4,14 +4,14 @@
 
 SignalCart is a modern AI-enhanced ecommerce and analytics platform that combines:
 
-- AI-powered product content generation
-- Intelligent product image understanding
-- End-to-end data engineering pipelines
-- Medallion architecture (Bronze → Silver → Gold)
-- Databricks + Unity Catalog analytics
-- LLM-powered conversational analytics
-- Dynamic frontend visualizations
-- Microservice-based architecture
+* AI-powered product content generation
+* Intelligent product image understanding
+* End-to-end data engineering pipelines
+* Medallion architecture (Bronze → Silver → Gold)
+* Databricks + Unity Catalog analytics
+* LLM-powered conversational analytics
+* Dynamic frontend visualizations
+* Microservice-based architecture
 
 The platform demonstrates how modern AI systems integrate with data engineering, cloud analytics, and interactive dashboards to create intelligent business intelligence experiences.
 
@@ -21,12 +21,12 @@ The platform demonstrates how modern AI systems integrate with data engineering,
 
 ## Ecommerce Platform
 
-- Product catalog management
-- Shopping cart functionality
-- Orders management
-- Admin dashboard
-- Product image uploads
-- AI-generated product titles/descriptions/tags
+* Product catalog management
+* Shopping cart functionality
+* Orders management
+* Admin dashboard
+* Product image uploads
+* AI-generated product titles/descriptions/tags
 
 ---
 
@@ -34,11 +34,11 @@ The platform demonstrates how modern AI systems integrate with data engineering,
 
 Using locally hosted LLMs with Ollama:
 
-- AI-generated product titles
-- AI-generated descriptions
-- AI-generated product tags
-- Image-aware product understanding
-- Automated ecommerce content enrichment
+* AI-generated product titles
+* AI-generated descriptions
+* AI-generated product tags
+* Image-aware product understanding
+* Automated ecommerce content enrichment
 
 Example:
 
@@ -117,21 +117,21 @@ AI Analytics Engine
 
 ## Frontend
 
-- React
-- Vite
-- Tailwind CSS
-- Recharts
-- Axios
+* React
+* Vite
+* Tailwind CSS
+* Recharts
+* Axios
 
 ---
 
 ## Backend
 
-- FastAPI
-- Python
-- SQLAlchemy
-- PostgreSQL
-- Docker
+* FastAPI
+* Python
+* SQLAlchemy
+* PostgreSQL
+* Docker
 
 ---
 
@@ -139,32 +139,81 @@ AI Analytics Engine
 
 ### Local AI
 
-- Ollama
-- Qwen3-VL
+* Ollama
+* Qwen3-VL
 
 ### Cloud AI
 
-- Groq API
-- Llama Models
+* Groq API
+* Llama Models
 
 ---
 
 ## Data Engineering Stack
 
-- Databricks
-- PySpark
-- Delta Lake
-- Unity Catalog
-- Azure Data Lake Storage Gen2
-- Medallion Architecture
+* Databricks
+* PySpark
+* Delta Lake
+* Unity Catalog
+* Azure Data Lake Storage Gen2
+* Medallion Architecture
 
 ---
 
 ## Infrastructure
 
-- Docker Compose
-- Microservices Architecture
-- Azure Cloud Services
+* Docker Compose
+* Microservices Architecture
+* Azure Cloud Services
+* Azure Event Hub
+* Apache Kafka-Compatible Streaming
+
+---
+
+## Streaming Architecture
+
+SignalCart also supports event-driven streaming pipelines using:
+
+* Azure Event Hub
+* Kafka APIs
+* Real-time event ingestion
+* Streaming analytics architecture
+
+The platform is designed to support:
+
+```text
+Ecommerce Events
+↓
+Azure Event Hub
+↓
+Kafka-Compatible Streams
+↓
+Databricks Structured Streaming
+↓
+Bronze Streaming Tables
+↓
+Real-Time Silver Transformations
+↓
+Live Gold Analytics
+```
+
+Potential streaming events:
+
+* order events
+* cart activity
+* product views
+* user activity
+* payment events
+* inventory updates
+
+This architecture enables:
+
+* real-time analytics
+* streaming ETL
+* low-latency dashboards
+* event-driven systems
+* scalable ingestion pipelines
+* modern data streaming workflows
 
 ---
 
@@ -176,10 +225,10 @@ Raw ingestion layer.
 
 Stores raw data extracted from PostgreSQL:
 
-- products
-- orders
-- users
-- order_items
+* products
+* orders
+* users
+* order_items
 
 Example:
 
@@ -199,19 +248,19 @@ Cleaned and transformed data.
 
 Transformations include:
 
-- data cleaning
-- timestamp conversions
-- deduplication
-- normalization
-- filtering invalid records
-- standardization
+* data cleaning
+* timestamp conversions
+* deduplication
+* normalization
+* filtering invalid records
+* standardization
 
 Example transformations:
 
-- lowercase emails
-- cleaned product titles
-- valid order filtering
-- numeric formatting
+* lowercase emails
+* cleaned product titles
+* valid order filtering
+* numeric formatting
 
 ---
 
@@ -221,13 +270,13 @@ Business-ready analytics layer.
 
 Gold tables:
 
-| Table | Purpose |
-|---|---|
-| gold.top_products | Best-selling products |
-| gold.monthly_sales | Monthly revenue trends |
-| gold.customer_ltv | Customer lifetime value |
-| gold.category_sales | Revenue by category |
-| gold.product_performance | Product analytics |
+| Table                    | Purpose                 |
+| ------------------------ | ----------------------- |
+| gold.top_products        | Best-selling products   |
+| gold.monthly_sales       | Monthly revenue trends  |
+| gold.customer_ltv        | Customer lifetime value |
+| gold.category_sales      | Revenue by category     |
+| gold.product_performance | Product analytics       |
 
 ---
 
@@ -275,12 +324,12 @@ SignalCart uses Databricks MCP (Model Context Protocol) to execute AI-generated 
 
 Features:
 
-- MCP JSON-RPC communication
-- asynchronous query execution
-- polling architecture
-- typed result parsing
-- Unity Catalog integration
-- schema-aware SQL generation
+* MCP JSON-RPC communication
+* asynchronous query execution
+* polling architecture
+* typed result parsing
+* Unity Catalog integration
+* schema-aware SQL generation
 
 ---
 
@@ -288,18 +337,18 @@ Features:
 
 The analytics dashboard supports:
 
-- conversational analytics
-- dynamic chart rendering
-- SQL preview
-- raw data visualization
-- KPI analytics
-- business intelligence workflows
+* conversational analytics
+* dynamic chart rendering
+* SQL preview
+* raw data visualization
+* KPI analytics
+* business intelligence workflows
 
 Supported charts:
 
-- line charts
-- bar charts
-- pie charts
+* line charts
+* bar charts
+* pie charts
 
 ---
 
@@ -333,13 +382,13 @@ Frontend Visualization
 
 The platform uses independent containers for:
 
-| Service | Purpose |
-|---|---|
-| ecommerce_backend | Main FastAPI backend |
-| analytics_service | AI analytics engine |
-| ecommerce_postgres | PostgreSQL database |
-| ecommerce_pgadmin | Database administration |
-| ecommerce_ollama | Local LLM inference |
+| Service            | Purpose                 |
+| ------------------ | ----------------------- |
+| ecommerce_backend  | Main FastAPI backend    |
+| analytics_service  | AI analytics engine     |
+| ecommerce_postgres | PostgreSQL database     |
+| ecommerce_pgadmin  | Database administration |
+| ecommerce_ollama   | Local LLM inference     |
 
 ---
 
@@ -454,12 +503,12 @@ Compare sales across products
 
 # Security Features
 
-- schema-aware SQL generation
-- restricted SQL operations
-- safe MCP execution
-- no destructive query support
-- prompt constraints
-- controlled analytics execution
+* schema-aware SQL generation
+* restricted SQL operations
+* safe MCP execution
+* no destructive query support
+* prompt constraints
+* controlled analytics execution
 
 ---
 
@@ -467,17 +516,17 @@ Compare sales across products
 
 ## Planned Features
 
-- real-time streaming analytics
-- Kafka integration
-- predictive analytics
-- recommendation engine
-- anomaly detection
-- AI forecasting
-- multi-tenant analytics
-- role-based access control
-- vector search
-- RAG analytics assistant
-- agentic workflows
+* real-time streaming analytics
+* Kafka integration
+* predictive analytics
+* recommendation engine
+* anomaly detection
+* AI forecasting
+* multi-tenant analytics
+* role-based access control
+* vector search
+* RAG analytics assistant
+* agentic workflows
 
 ---
 
@@ -485,18 +534,18 @@ Compare sales across products
 
 This project demonstrates practical implementation of:
 
-- AI Engineering
-- Data Engineering
-- LLM Integration
-- Databricks Architecture
-- Medallion Architecture
-- MCP Protocol
-- Cloud Analytics
-- Conversational BI
-- Full Stack Development
-- Docker Microservices
-- FastAPI APIs
-- React Dashboards
+* AI Engineering
+* Data Engineering
+* LLM Integration
+* Databricks Architecture
+* Medallion Architecture
+* MCP Protocol
+* Cloud Analytics
+* Conversational BI
+* Full Stack Development
+* Docker Microservices
+* FastAPI APIs
+* React Dashboards
 
 ---
 
@@ -508,13 +557,13 @@ SignalCart is not just an ecommerce application.
 
 It is a complete AI-native analytics ecosystem combining:
 
-- ecommerce workflows
-- AI content generation
-- cloud data engineering
-- Databricks analytics
-- conversational BI
-- dynamic frontend visualizations
-- microservice orchestration
+* ecommerce workflows
+* AI content generation
+* cloud data engineering
+* Databricks analytics
+* conversational BI
+* dynamic frontend visualizations
+* microservice orchestration
 
 inside a single integrated platform.
 
@@ -524,19 +573,18 @@ inside a single integrated platform.
 
 Built as an AI-enhanced modern data engineering and analytics platform project integrating:
 
-- Databricks
-- FastAPI
-- React
-- Ollama
-- Groq
-- MCP
-- Delta Lake
-- Unity Catalog
-- Azure Cloud
+* Databricks
+* FastAPI
+* React
+* Ollama
+* Groq
+* MCP
+* Delta Lake
+* Unity Catalog
+* Azure Cloud
 
 ---
 
 # License
 
 This project is intended for educational, portfolio, and research purposes.
-
