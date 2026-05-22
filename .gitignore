@@ -7,5 +7,7 @@ backend/.env
 frontend/node_modules/
 frontend/dist/
 data/
-phase_1_ai_commerce_platform_setup_guide.md/
-ai_features.md/
+
+
+*.ai_features.md
+*.phase_1_ai_commerce_platform_setup_guide.md
