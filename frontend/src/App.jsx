@@ -10,6 +10,7 @@ import Orders from './pages/Orders'
 import AdminNewProduct from './pages/AdminNewProduct'
 import ProductDetail from './pages/ProductDetail'
 import Signup from './pages/Signup'
+import AnalyticsPage from './pages/AnalyticsPage'
 import { AuthProvider } from './state/AuthContext'
 import { CartProvider } from './state/CartContext'
 import './App.css'
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/products" element={<Home />} />
                 <Route path="/products/:id" element={<ProductDetail />} />
                 <Route path="/admin/products/new" element={<AdminNewProduct />} />
+                <Route path="/analytics" element={<AnalyticsPage />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/orders" element={<Orders />} />

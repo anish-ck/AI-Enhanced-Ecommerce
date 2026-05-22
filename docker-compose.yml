@@ -41,6 +41,22 @@ services:
 
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
+  analytics_service:
+    build: ./analytics_service
+    container_name: analytics_service
+    restart: always
+
+    env_file:
+      - ./analytics_service/.env
+
+    ports:
+      - "8002:8001"
+
+    volumes:
+      - ./analytics_service:/app
+
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
+
   ollama:
     image: ollama/ollama:latest
     container_name: ecommerce_ollama

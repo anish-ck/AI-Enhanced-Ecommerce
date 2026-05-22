@@ -476,3 +476,228 @@ Build a simplified production-style AI analytics platform using:
 - Docker
 - AI-powered business analytics
 
+REPLACE WITH MCP-ONLY ARCHITECTURE
+
+Use:
+
+Databricks MCP endpoint
+
+instead of:
+
+SQL Connector
+JDBC
+Warehouse ID
+REQUIRED ENVIRONMENT VARIABLE CHANGES
+OLD
+DATABRICKS_HOST=
+DATABRICKS_TOKEN=
+DATABRICKS_WAREHOUSE_ID=
+NEW
+GROQ_API_KEY=
+
+DATABRICKS_MCP_URL=
+DATABRICKS_TOKEN=
+REQUIRED MCP URL FORMAT
+
+Example:
+
+https://adb-xxxx.azuredatabricks.net/api/2.0/mcp/sql
+REQUIRED ARCHITECTURE CHANGE
+OLD FLOW
+Frontend
+↓
+Analytics Service
+↓
+Databricks SQL Connector
+↓
+Warehouse
+↓
+Gold Tables
+NEW FLOW
+Frontend
+↓
+Main Backend Proxy
+↓
+Analytics Container
+↓
+Groq API
+↓
+Databricks MCP Endpoint
+↓
+Gold Tables
+REQUIRED LLM CHANGE
+OLD
+
+Possible mixed/local models.
+
+NEW
+
+Use ONLY:
+
+Groq API
+
+Recommended model:
+
+llama-3.3-70b-versatile
+REQUIRED FOLDER STRUCTURE CHANGE
+OLD
+databricks_service.py
+NEW
+
+Replace with:
+
+mcp_service.py
+REQUIRED SERVICE RESPONSIBILITY CHANGE
+OLD
+
+databricks_service.py
+
+warehouse connection
+JDBC
+SQL connector logic
+NEW
+
+mcp_service.py
+
+MCP API calls
+execute_sql
+execute_sql_read_only
+poll_sql_result
+REQUIRED API FLOW CHANGE
+OLD
+LLM
+↓
+SQL Connector
+↓
+Warehouse
+NEW
+LLM
+↓
+MCP execute_sql
+↓
+Databricks
+REQUIRED IMPLEMENTATION SCOPE CHANGE
+REMOVE
+
+Do NOT implement:
+
+Redis
+Celery
+Kubernetes
+vector database
+RAG
+autonomous agents
+event-driven architecture
+KEEP IMPLEMENTATION SIMPLE
+
+Implement ONLY:
+
+analytics container
+Groq integration
+MCP integration
+SQL generation
+JSON response
+chart mapping
+React dashboard
+REQUIRED BACKEND COMMUNICATION CHANGE
+OLD
+
+Frontend directly calling analytics container.
+
+NEW
+
+Use backend proxy architecture.
+
+Correct flow:
+
+Frontend
+↓
+Main FastAPI Backend
+↓
+Analytics Container
+
+Benefits:
+
+hides internal services
+avoids CORS issues
+production-style architecture
+REQUIRED SQL EXECUTION CHANGE
+OLD
+
+Using Databricks SQL connector.
+
+NEW
+
+All SQL execution must happen through MCP endpoint using:
+
+execute_sql
+execute_sql_read_only
+poll_sql_result
+REQUIRED SECURITY CHANGE
+
+Generated SQL must:
+
+allow SELECT only
+block DELETE
+block UPDATE
+block DROP
+block ALTER
+
+Validate SQL before MCP execution.
+
+REQUIRED DEVELOPMENT ORDER
+Correct order now:
+1. Create analytics container
+2. Add Docker Compose integration
+3. Add MCP connectivity
+4. Test hardcoded SQL queries
+5. Return JSON results
+6. Build React dashboard
+7. Add charts
+8. Add Groq SQL generation
+9. Add AI insights
+REQUIRED DOCKER CHANGE
+
+Add ONLY one extra container:
+
+analytics_service:
+  build: ./analytics_service
+  container_name: analytics_service
+  restart: always
+
+  ports:
+    - "8001:8001"
+
+  env_file:
+    - ./analytics_service/.env
+
+Do NOT add:
+
+multiple analytics services
+orchestration layers
+distributed containers
+FINAL TARGET ARCHITECTURE
+React Frontend
+↓
+Main Backend
+↓
+Analytics Container
+↓
+Groq API
+↓
+Databricks MCP
+↓
+Gold Tables
+↓
+Charts + Analytics
+FINAL IMPLEMENTATION GOAL
+
+Build:
+
+a simplified AI analytics container
+Groq-powered SQL generation
+MCP-based Databricks querying
+React analytics dashboard
+chart-ready analytics responses
+
+without unnecessary infrastructure complexity.
