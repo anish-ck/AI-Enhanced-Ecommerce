@@ -1,5 +1,9 @@
 # SignalCart — AI-Powered Ecommerce Analytics Platform
 
+# System Architecture
+
+![System Architecture](assets/architecture.png)
+
 ## Overview
 
 SignalCart is a modern AI-enhanced ecommerce and analytics platform that combines:
