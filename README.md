@@ -6,13 +6,13 @@
 
 ## Web View
 
-### Home Screen
+### Analytics Screen
 ![Web View 1](assets/screen1.png)
 
 ### Product Screen
 ![Web View 2](assets/screen2.png)
 
-### Dashboard Screen
+### Ai Description Writer Screen
 ![Web View 3](assets/screen3.png)
 
 ## Overview
